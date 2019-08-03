@@ -20,14 +20,10 @@ Clone this app using the command:
 # Step 2:
 Install requirements of the project using command:
 
-
-  pip3 install -r requirements.txt
+    pip3 install -r requirements.txt
   
-
 # Step 3:
 Run the scraper file using command:
 
-
-  cd Zomato-Scrapeing/
-  python3 zm.py
-
+    cd Zomato-Scrapeing/
+    python3 zm.py
