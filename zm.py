@@ -1,18 +1,21 @@
 from   selenium import webdriver
 from bs4 import BeautifulSoup
 from pprint import pprint
-from selenium.webdriver.common.action_chains import ActionChains
-from selenium.webdriver.common.keys import Keys
+from selenium import webdriver
 def Zomato_scrap():
-	browser = webdriver.Chrome('/usr/bin/chromedriver')
+	browser = webdriver.Chrome('/home/shivansh/Documents/driver/chromedriver')
 	browser.get("https://www.zomato.com/ncr/great-food-no-bull")
 	driver=browser.execute_script("return document.documentElement.outerHTML")
-	browser.quit()
 	soup=BeautifulSoup(driver,'html.parser')
-	div=soup.find('div',class_="ml15 mr15 mt15 " )
-	div1=div.find('h1',class_="hero_title collections_title mb5 mt5 ")
-	print(div1.text)
-	d_name=soup.find('div',class_="row col-res-list collection_listings_container")
+	div=soup.find('div',class_="ml15 mr15 mt15" ).text.strip().split()
+	best=''
+	for m in div:
+		if m=='The':
+			break
+		else:
+			best+=(m+' ')
+	pprint(best)
+	d_name=soup.find('div',class_="pb5")
 	all_r_data=d_name.find_all('div',class_="col-s-8 col-l-1by3")
 	empty_list=[]
 	link_list={}
@@ -36,12 +39,13 @@ def Zomato_scrap():
 			empty_list.append(count)
 			empty_list.append(Dict)
 			count+=1
+	browser.quit()
 	pprint(empty_list)
 	user=int(input("Which hotel do you want to know about?...       \n"))
 	for i,j in link_list.items():
 		if i==user:
 			hotel={}
-			browser = webdriver.Chrome('/usr/bin/chromedriver')
+			browser = webdriver.Chrome('/home/shivansh/Documents/driver/chromedriver')
 			browser.get(j)
 			driver=browser.execute_script("return document.documentElement.outerHTML")
 			browser.quit()
@@ -50,7 +54,8 @@ def Zomato_scrap():
 				all_detail=soup.find('div',class_="row ui segment")
 				if(all_detail!=None):
 					phone=all_detail.find('',class_="mbot")
-					contact=phone.find('span',class_="tel").text
+					if (phone!=None):
+						contact=phone.find('span',class_="tel").text
 					hotel["contact no..."]=contact.strip()
 					cost=all_detail.find('div',class_="res-info-detail")
 					cost1=cost.find('span',tabindex="0").text.strip()
