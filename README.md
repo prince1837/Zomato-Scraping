@@ -25,5 +25,5 @@ Install requirements of the project using command:
 # Step 3:
 Run the scraper file using command:
 
-    cd Zomato-Scrapeing/
+    cd Zomato-Scraping/
     python3 zm.py
